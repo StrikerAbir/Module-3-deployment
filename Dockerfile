@@ -1,13 +1,17 @@
 FROM node:18-alpine
 
-WORKDIR /app 
+WORKDIR /app
 
+# Copy only dependency files
 COPY package*.json ./
 
-RUN npm install --production
+# Install only production dependencies
+RUN npm install --omit=dev
 
-COPY . . 
+# Copy only necessary source files
+COPY src ./src
 
+# App port (match your server.js!)
 EXPOSE 5000
 
 ENV PORT=5000
